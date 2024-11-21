@@ -1,15 +1,31 @@
 import { Request, Response } from "express";
-import User from "../models/user";
 import UserService from "../service/user.service";
 
 const userService = new UserService();
-export const createUser = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response) => {
   try {
-    const user = await userService.createUser(req.body);
+    const user = await userService.registerUser(req.body);
     res.status(201).json(user);
   } catch (error) {
     const err = error as Error;
     res.status(500).json({ error: err.message });
+  }
+};
+
+// User login route handler
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+    const user = await userService.loginUser(req.body);    
+    if (!user) {
+      res.status(400).json({ error: 'Invalid email or password.' });
+    }
+
+    // Generate token or proceed with login success (example: JWT)
+    res.status(200).json(user);
+  } catch (error) {
+    const err = error as Error;
+    res.status(500).json({ error:  err.message });
   }
 };
 

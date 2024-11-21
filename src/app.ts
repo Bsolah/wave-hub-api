@@ -3,7 +3,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import sequelize from "./config/database";
-import userRoutes from "./routes/userRoutes";
+import userRoutes from "./routes/user.routes";
+import categoryRoutes from "./routes/category.routes";
+import productRoutes from "./routes/product.routes";
 import errorMiddleware from "./middleware/error.middleware";
 
 dotenv.config();
@@ -16,6 +18,8 @@ app.use(cors());
 
 // Routes
 app.use("/api", userRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   errorMiddleware(err, req, res, next);
