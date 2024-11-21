@@ -23,29 +23,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-// export const getUserById = async (req: Request, res: Response) => {
-//     try {
-//       const userId = req?.params?.userId;
-//       console.log('req ', req.params)
-//       const user = await User.findByPk(userId);  // Uses the primary key
-//       if (!user) {
-//         res.status(404  ).json({ error: 'user not found'});
-//       }
-//       res.status(200).json(user);
-//     } catch (error) {
-//         const err =  error as Error
-//         res.status(500).json({ error: err.message });
-//     }
-//   }
-
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req?.params?.userId;
     const updatedUser = await userService.updateUser(userId, req.body);
     if (!updatedUser) {
-      return res.status(404).json({ error: "user not found" });
+       res.status(404).json({ error: "user not found" });
+    } else {
+      res.status(200).json(updatedUser);
     }
-    return res.status(200).json(updatedUser);
 
   } catch (error) {
     res.status(500).json({ error: "user not found" });
