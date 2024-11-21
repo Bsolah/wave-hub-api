@@ -7,9 +7,18 @@ class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async createUser(data: any) {
+  async registerUser(data: any) {
     try {
-      const user = await this.userRepository.createUser(data);
+      const user = await this.userRepository.registerUser(data);
+      return user;
+    } catch (error: any) {
+      throw new BaseError(error, 400);
+    }
+  }
+
+  async loginUser(data: any) {
+    try {
+      const user = await this.userRepository.loginUser(data);
       return user;
     } catch (error: any) {
       throw new BaseError(error, 400);
