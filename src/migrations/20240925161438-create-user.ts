@@ -1,11 +1,11 @@
-import { QueryInterface, DataTypes } from "sequelize";
+import { QueryInterface, DataTypes } from "sequelize"
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface: QueryInterface) {
     await queryInterface.createTable("users", {
       user_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -42,9 +42,9 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE,
       },
-    });
+    })
   },
   async down(queryInterface: QueryInterface) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("users")
   },
-};
+}

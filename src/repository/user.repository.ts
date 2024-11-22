@@ -1,37 +1,38 @@
-import User from "../models/user";
+import User from "../models/user"
+import { IUser } from "../types"
 
 class UserRepository {
-  async createUser(data: any) {
-    const user = await User.create(data);
-    return user;
+  async createUser(data: IUser) {
+    const user: IUser = await User.create({ ...data })
+    return user
   }
 
   async getAllUsers() {
-    const users = await User.findAll({
+    const users: IUser[] = await User.findAll({
       where: { status: "active" },
-    });
-    return users;
+    })
+    return users
   }
 
   async getUserById(userId: string) {
-    const user = await User.findByPk(userId); // Uses the primary key
-    return user;
+    const user: IUser | null = await User.findByPk(userId) // Uses the primary key
+    return user
   }
 
   async getUserByEmail(email: string) {
-    const user = await User.findOne({
+    const user: IUser | null = await User.findOne({
       where: { email: email },
-    });
-    return user;
+    })
+    return user
   }
 
-  async updateUser(userId: string, data: any) {
+  async updateUser(userId: string, data: IUser) {
     const [updated] = await User.update(data, {
       where: { user_id: userId },
-    });
+    })
     if (updated) {
-      const updatedUser = await User.findByPk(userId);
-      return updatedUser;
+      const updatedUser: IUser | null = await User.findByPk(userId)
+      return updatedUser
     }
   }
 
@@ -40,13 +41,13 @@ class UserRepository {
       { status: "inactive" },
       {
         where: { user_id: userId },
-      }
-    );
+      },
+    )
     if (updated) {
-      const updatedUser = await User.findByPk(userId);
-      return updatedUser;
+      const updatedUser: IUser | null = await User.findByPk(userId)
+      return updatedUser
     }
   }
 }
 
-export default UserRepository;
+export default UserRepository
