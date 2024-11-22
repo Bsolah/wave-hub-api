@@ -1,15 +1,14 @@
-import express from "express";
+import express, { Application } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import sequelize from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import errorMiddleware from "./middleware/error.middleware";
-import errHandler from "./errHandler";
 
 dotenv.config();
 
-const app = express();
+const app: Application = express();
 
 // Middleware
 app.use(bodyParser.json());
