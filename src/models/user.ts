@@ -43,6 +43,7 @@ export default class User extends Model {
   @Column(DataType.DATE)
   updated_at!: Date
 
+  @Default("active")
   @Column(DataType.STRING)
   status!: string
 }

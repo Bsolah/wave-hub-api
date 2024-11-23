@@ -1,16 +1,54 @@
 import User from "../models/user"
+import bcrypt from "bcrypt"
 import { IUser } from "../types"
 
+const hashPassword = async (password: string): Promise<string> => {
+  const saltRounds = 10 // You can increase this value for stronger hashing
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
+  return hashedPassword
+}
+
+const comparePassword = async (
+  inputPassword: string,
+  storedHash: string,
+): Promise<boolean> => {
+  const isMatch = await bcrypt.compare(inputPassword, storedHash)
+  return isMatch
+}
+
 class UserRepository {
-  async createUser(data: IUser) {
-    const user: IUser = await User.create({ ...data })
+  async registerUser(data: IUser) {
+    const { email, password_hash, first_name, last_name } = data
+
+    // Hash the password
+    const hashedPassword = await hashPassword(password_hash)
+
+    const user = await User.create({
+      email,
+      password_hash: hashedPassword,
+      first_name,
+      last_name,
+    })
     return user
   }
 
+  async loginUser(email: string, password_hash: string) {
+    // Find user by email
+    const user = await User.findOne({ where: { email } })
+
+    // Compare the entered password with the hashed password
+    const isMatch = await comparePassword(
+      password_hash,
+      user?.password_hash || "",
+    )
+
+    if (isMatch) {
+      return { isMatch, message: "Login successful" }
+    }
+  }
+
   async getAllUsers() {
-    const users: IUser[] = await User.findAll({
-      where: { status: "active" },
-    })
+    const users: IUser[] = await User.findAll()
     return users
   }
 

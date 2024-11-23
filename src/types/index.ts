@@ -11,3 +11,17 @@ export interface IUser {
   updated_at: Date
   status: string
 }
+
+export interface ICategory {
+  name: string
+  category_id?: string
+}
+
+export interface IProduct {
+  name: string
+  description: string
+  price: number
+  stock_quantity: number
+  seller_id: string
+  category_id: string
+}

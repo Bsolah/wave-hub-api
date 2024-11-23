@@ -8,9 +8,22 @@ class UserService {
     this.userRepository = new UserRepository()
   }
 
-  async createUser(data: IUser) {
+  async registerUser(data: IUser) {
     try {
-      const user = await this.userRepository.createUser(data)
+      const user = await this.userRepository.registerUser(data)
+      return user
+    } catch (error) {
+      const err = error as string
+      throw new BaseError(err, 400)
+    }
+  }
+
+  async loginUser(data: IUser) {
+    try {
+      const user = await this.userRepository.loginUser(
+        data.email,
+        data.password_hash,
+      )
       return user
     } catch (error) {
       const err = error as string

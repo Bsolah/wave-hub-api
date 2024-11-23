@@ -5,9 +5,8 @@ module.exports = {
   async up(queryInterface: QueryInterface) {
     await queryInterface.createTable("users", {
       user_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
-        autoIncrement: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -28,11 +27,15 @@ module.exports = {
       },
       phone_number: {
         type: DataTypes.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       address: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         allowNull: false,
