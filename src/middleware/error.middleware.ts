@@ -1,18 +1,16 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express"
-import { BaseError } from "../utils/error"
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 
 const errorMiddleware = (
-  err: ErrorRequestHandler,
+  err: any,
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
-  console.log(err, next)
-  const error = err as unknown as BaseError
-  console.log(error.message)
+  console.log(err);
+  console.log(err.message);
   return res
-    .status(error?.code ?? 400)
-    .json({ status: "error", message: error?.message })
-}
+    .status(err?.code ?? 400)
+    .json({ status: "error", message: err?.message });
+};
 
-export default errorMiddleware
+export default errorMiddleware;
