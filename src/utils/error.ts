@@ -1,10 +1,10 @@
 class BaseError extends Error {
-  public code: number
+  public code: number;
   constructor(message: string, code: number) {
-    super(message)
-    this.name = this.constructor.name
-    this.code = code
+    super(message);
+    this.name = this.constructor.name;
+    this.code = code;
   }
 }
 
-export { BaseError }
+export { BaseError };
